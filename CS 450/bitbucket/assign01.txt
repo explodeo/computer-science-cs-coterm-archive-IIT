@@ -1,0 +1,134 @@
+CHRISTOPHER MORCOM
+CS 450 
+SUMMER 2019
+
+!! Note that this assignment was done after the completion of all other labs so values may differ !!
+
+Exercise 1:
+	
+	1) Inside of "traps.h", T_SYSCALL (system call trap) is 64. 
+	   When the idt is loaded, this means that idt[64] will contain the trap. 
+	   Intel also requires that base addresses of the IDT are aligned to an 8-byte boundary. 
+	   64 was chosen arbitrarily and 8-byte aligned to prevent overlap with other interrupts.
+	2) My IDT register is populated with the value 0x801172a0.
+	   So we look at idt+64 to see the T_SYSCALL trap vector. 
+	   Using "x /5gx idt+62" we can see the trap surrounded by some other vectors
+
+	   Output:
+	   (gdb) x /5gx idt+62
+	    0x80117490 <idt+496>:   0x80108e0000086184      
+	    						0x80108e000008618d
+	    0x801174a0 <idt+512>:   0x8010ef0000086196      <------ This is vector 64 (or T_SYSCALL)
+	    						0x80108e000008619f
+	    0x801174b0 <idt+528>:   0x80108e00000861a8
+
+	   As we can see, there is only one value that starts with "0x8010ef". where the F digit 
+	   indicates a DPL of 1, while the other values have zero. We can look at the syscall trap 
+	   vector's asssembly by using the top 4 and bottom 4 bits of the address with "x /3i 0x80106196".
+
+	   Output:
+	   (gdb) x /3i 0x80106196
+	   0x80106196 <vector64>:       push   $0x0
+	   0x80106198 <vector64+2>:     push   $0x40
+	   0x8010619a <vector64+4>:     jmp    0x80105ac7 <alltraps>
+
+	   This asssembly indicates that we are pushing T_SYSCALL to alltraps to execute.
+
+Exercise 2:
+	
+	1) Once we are able to map physical and virtual addresses, we can run processes.inside the scheduler, 
+       we have switchuvm() which switches to user virtual memory and will populate the virtual memory.
+       We can navigate to this by inspecting the cr3 register to get a page directory, then a page table,
+       then we can get the page frames of the process (which will be user code). Let's do this below.
+       Note that we truncate the 7 at the end since it corresponds to paging flags and not a page base address.
+
+       		CR3 ----------> PGDIR -------> PTABLE ------> PFRAME
+       	(0x8dffe000) -> (0x8dfbc000) -> (0x8dfbd000) -> DATA (5gx)
+
+       During this time, the scheduler that we have run will look for processes to schedule. The first user
+       process is in initcode.S, which will run the following: "movl $SYS_exec, %eax" and "int $T_SYSCALL".
+       Since this is the first syscall in the first usepr process, we now know that the first syscall is SYS_exec.
+
+    2) Before the first system call, we can look at the stack via the ESP register. Stacks are allocated to be
+	   128 B in size. so we can explore the contents of the entire stack with "x /16gx 0x8010b560". This is what we get:
+
+	   Output:
+	   (gdb) x /16gx 0x8010b560
+		0x8010b560 <stack+3984>:        0x0001007480112d74      0x801037d48010b588    <------- STACK TOP
+		0x8010b570 <stack+4000>:        0x0001007400000000      0x000000008010b588
+		0x8010b580 <stack+4016>:        0x0000000000010074      0x80102f648010b5a8    <------- This is all user code
+		0x8010b590 <stack+4032>:        0x0000000080107824      0x801127a000000000
+		0x8010b5a0 <stack+4048>:        0x8011285080112850      0x801030b18010b5cc
+		0x8010b5b0 <stack+4064>:        0x8e00000080400000      0x000000000000008a
+		0x8010b5c0 <stack+4080>:        0x0000000000000000      0x00007bf800010074
+		0x8010b5d0:     				0x0000000000000000      0x0000000000000000	  <------- STACK BOTTOM
+
+		We know that this is the entire stack since the base is loaded with zero and we inspected from the top of the stack.
+
+Exercise 3:
+	
+	1) When we break at swtch, we are led to swtch.S. ESP is populated with address: 0x8010b55c
+	   We explore the stack to get these values at the top 3 indices of the stack.
+	   
+	   Output:
+	   (gdb) x /3w 0x8010b55c
+		0x8010b55c <stack+3980>:        0x80103b9c      0x801127a4      0x8dffff9c
+
+	2) When we do the "movl %edx, %esp" instruction, our address in ESP changes to 0x8dffff9c. These are the top 6 values. 
+
+	   (gdb) x /6w 0x8dffff9c
+		0x8dffff9c:     0x00000000      0x00000000      0x00000000      0x00000000
+		0x8dffffac:     0x80103750      0x80105adf
+
+Exercise 4:
+	
+	1) By simply running "b syscall" while inside the scheduler, we can jump to the handler for the first syscall (exec).
+	   When we break at syscall() in syscall.c, we step over the line "curproc->tf->eax = syscalls[num]();". This will 
+	   run sys_exec, which will allcate memory, diplayed below.
+
+	   Output:
+	   (qemu) info mem
+		0000000000000000-0000000000001000 0000000000001000 urw    <----------------
+		0000000000001000-0000000000002000 0000000000001000 -rw					  |
+		0000000000002000-0000000000003000 0000000000001000 urw    <---------THESE ARE USER ACCESSIBLE
+
+	   Since we have two user-accessible segments in memory, we should check the page directory for allocated blocks.
+	   Exploring the cr3 register (0x0dfbb000) in virtual space by running "x /12gx 0x8dfbb000" only gives us one page 
+	   directory that we explore to find only two populated page tables:
+
+	   Output:
+	   (gdb) x /2x 0x8df79000
+		0x8df79000:     0x0df780030df7a007      <---- Page table for process
+						0x000000000df77007		<---- Kernel page table
+
+	   We explore the correct page table to get the number of user pages. Since each page table has 1024 entries, it is 
+	   simply a found using qemu's "info mem", which, as done above shows there were 1000 user pages allocated.
+	   Under the xv6 documentation, we inspect the page table by taking the top 4, and lower 4 hex digits and replace the
+	   leading zero to get the memory address: 0x8df7a000 (flags are truncated).
+
+	   Output:
+		(qemu) info mem
+		0000000000000000-0000000000001000 0000000000001000 urw    
+		0000000000001000-0000000000002000 0000000000001000 -rw					  
+		0000000000002000-0000000000003000 0000000000001000 urw    <--------- newly allocated page count
+
+		This last line tells us that between the physical adresses ranges of 0x2000 to 0x3000, there were at total
+		of 0x1000 or 1024 user pages (one full page table) allocated for the user process. This is also commented in the 
+		source code.
+
+	2)  When we inspect the host page table mentioned above at 0x8df7a000, we get the following first 12 instructions:
+
+		Output:
+		(gdb) x /12i 0x8df7a000
+		 0x8df7a000:  push   %ebp
+		 0x8df7a001:  mov    %esp,%ebp
+		 0x8df7a003:  push   %ebx
+		 0x8df7a004:  and    $0xfffffff0,%esp
+		 0x8df7a007:  sub    $0x10,%esp
+		 0x8df7a00a:  movl   $0x2,0x4(%esp)
+		 0x8df7a012:  movl   $0x898,(%esp)
+		 0x8df7a019:  call   0x8df7a3f2
+		 0x8df7a01e:  test   %eax,%eax
+		 0x8df7a020:  js     0x8df7a0d2
+		 0x8df7a026:  movl   $0x0,(%esp)
+		 0x8df7a02d:  call   0x8df7a42a
