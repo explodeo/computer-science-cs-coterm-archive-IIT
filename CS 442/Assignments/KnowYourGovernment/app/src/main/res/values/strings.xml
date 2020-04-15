@@ -1,0 +1,8 @@
+<resources>
+    <string name="about">About</string>
+    <string name="app_name">Know Your Government</string>
+    <string name="copyright">\u00A9 2018, Christopher Morcom</string>
+    <string name="version">Version 1.0</string>
+    <string name="zip_city">Zip/City</string>
+    <string name="no_loc">Location Unavailable</string>
+</resources>

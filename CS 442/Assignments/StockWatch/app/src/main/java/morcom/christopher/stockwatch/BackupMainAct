@@ -1,0 +1,133 @@
+package morcom.christopher.stockwatch;
+
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.Menu;
+import android.view.View;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener{
+
+    private List<Stock> stockList;
+    private RecyclerView recyclerView;
+    private Stock newStock;
+
+    private StockAdapter stockAdapter;
+
+    private static final int ADD_CODE = 1;
+    private static final int UPDATE_CODE = 2;
+    private static final int FIND_CODE = 3;
+
+    private static final String TAG = "MainActivity";
+
+    private DatabaseHandler dbHandler;
+
+    private static final String STOCKSYMBOLSOURCE = "https://api.iextrading.com/1.0/ref-data/symbols";
+
+    public void downloadStocks(){
+        new NameDownloader().execute(STOCKSYMBOLSOURCE);
+        //load stock data for searching in db
+    }
+    public void downloadStockData(){
+
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Log.d(TAG, "onCreate: ");
+
+        recyclerView = findViewById(R.id.Recycler);
+        stockAdapter = new StockAdapter(stockList, this);
+        recyclerView.setAdapter(stockAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        dbHandler = new DatabaseHandler(this);
+
+        dbHandler.dumpDbToLog();
+        ArrayList<Stock> list = dbHandler.loadStocks();
+        stockList.addAll(list);
+        Collections.sort(stockList);
+        stockAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onDestroy() {
+        dbHandler.shutDown();
+        super.onDestroy();
+    }
+
+   /* @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+*/
+    @Override
+    public void onClick(View v) {
+        //dostuff
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        final int pos = recyclerView.getChildLayoutPosition(v);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dbHandler.deleteStock(stockList.get(pos).getSymbol());
+                stockList.remove(pos);
+                stockAdapter.notifyDataSetChanged();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User cancelled the dialog
+            }
+        });
+
+        builder.setMessage("Delete stock " + stockList.get(pos).getSymbol() + "?");
+        builder.setTitle("Delete Stock");
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+
+        return true;
+    }
+/*
+    public void doAdd(View v) {
+        Intent intent = new Intent(this, BookDetailActivity.class);
+        startActivityForResult(intent, ADD_CODE);
+    }
+
+    public void doFind(View v) {
+        Intent intent = new Intent(this, BookFindActivity.class);
+        startActivityForResult(intent, FIND_CODE);
+    }
+*/
+    public void showFindResults(Stock s){
+        //dostuff
+    }
+
+    public void whenAsyncIsDone(List<Stock> sl) {
+        stockList = sl;
+        if (stockList != null) {
+            recyclerView = findViewById(R.id.Recycler);
+            stockAdapter = new StockAdapter(stockList, this);
+            recyclerView.setAdapter(stockAdapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            stockAdapter.notifyDataSetChanged();
+        }
+    }
+}

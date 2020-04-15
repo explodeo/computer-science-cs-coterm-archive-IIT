@@ -1,0 +1,9 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Temperature Converter</string>
+    <string name="button">Button</string>
+    <string name="textview" tools:ignore="DuplicateDefinition">TextView</string>
+    <string name="textview2" tools:ignore="DuplicateDefinition">TextView</string>
+    <string name="temperature_converter">Temperature Converter</string>
+    <string name="fahrenheit_to_celsius">Fahrenheit to Celsius</string>
+    <string name="celcius_to_fahrenheit">Celsius to Fahrenheit</string>
+</resources>

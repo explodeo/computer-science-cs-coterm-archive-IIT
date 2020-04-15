@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">MultiNotes</string>
+    <string name="info">info</string>
+    <string name="add">add</string>
+    <string name="title">Title</string>
+    <string name="last_updated">Last Updated</string>
+    <string name="preview">First few lines of the note...</string>
+    <string name="copyright">\u00A9 2018, Christopher Morcom</string>
+    <string name="version">Version 1.0.0</string>
+    <string name="title_help">Enter Title Here</string>
+    <string name="note_help">Begin typing notes here...</string>
+    <string name="file_name">Notes.json</string>
+    <string name="encoding">UTF-8</string>
+    <string name="saved">Note Saved</string>
+    <string name="no_file">No Notes File Found</string>
+</resources>
