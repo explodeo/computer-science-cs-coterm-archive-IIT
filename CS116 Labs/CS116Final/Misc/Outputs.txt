@@ -1,0 +1,30 @@
+Input File: rushhour.txt
+Manual Toll Booths: 4
+Automatic Toll Booths: 2
+
+Manual Line #1 Maximum Length=105
+Manual Line #2 Maximum Length=102
+Manual Line #3 Maximum Length=103
+Manual Line #4 Maximum Length=103
+Automatic Line #1 Maximum Length=106
+Automatic Line #2 Maximum Length=106
+Max Manual Wait = 737
+Max Automatic Wait = 465
+Avg Manual Wait = 325.5034053893995
+Avg Auto Wait = 112.8046183297445
+
+
+Input File: nonrushhour.txt
+Manual Toll Booths: 1
+Automatic Toll Booths: 5
+
+Manual Line #1 Maximum Length=7
+Automatic Line #1 Maximum Length=1
+Automatic Line #2 Maximum Length=1
+Automatic Line #3 Maximum Length=1
+Automatic Line #4 Maximum Length=1
+Automatic Line #5 Maximum Length=1
+Max Manual Wait = 39
+Max Automatic Wait = 0
+Avg Manual Wait = 5.142857142857146
+Avg Auto Wait = 0.0

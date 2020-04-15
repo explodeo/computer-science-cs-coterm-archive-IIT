@@ -1,0 +1,10 @@
+There have been 0 calls to the listAll() method.
+There have been 0 calls to the candidateInfo() method.
+There have been 0 calls to the voteInfo() method.
+There have been 0 calls to the stateInfo() method.
+There have been 1 calls to the dollarsSpentInfo() method.
+There have been 1 calls to the partyInfo() method.
+There have been 1 calls to the finalstats() method.
+There have been 1 calls to the sortList() method.
+There have been 2 invalid inputs.
+There have been 0 calls to the help() method.

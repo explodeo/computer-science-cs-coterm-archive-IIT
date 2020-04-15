@@ -1,0 +1,49 @@
+Manual Toll Booths: 1
+Automatic Toll Booths: 5
+
+Manual Line #1 Maximum Length=6
+Automatic Line #1 Maximum Length=0
+Automatic Line #2 Maximum Length=1
+Automatic Line #3 Maximum Length=1
+Automatic Line #4 Maximum Length=1
+Automatic Line #5 Maximum Length=1
+Max Manual Wait = 30
+Max Automatic Wait = 0
+Avg Manual Wait = 3.5884861407249518
+Avg Auto Wait = 0.0
+
+Vehicles that had to enter at a later time: 0
+
+
+Manual Toll Booths: 3
+Automatic Toll Booths: 3
+
+Manual Line #1 Maximum Length=1
+Manual Line #2 Maximum Length=1
+Manual Line #3 Maximum Length=2
+Automatic Line #1 Maximum Length=1
+Automatic Line #2 Maximum Length=1
+Automatic Line #3 Maximum Length=1
+Max Manual Wait = 9
+Max Automatic Wait = 0
+Avg Manual Wait = 0.06823027718550106
+Avg Auto Wait = 0.0
+
+Vehicles that had to enter at a later time: 0
+
+
+Input File: Manual Toll Booths: Automatic Toll Booths: 2
+
+Manual Line #1 Maximum Length=1
+Manual Line #2 Maximum Length=1
+Manual Line #3 Maximum Length=1
+Manual Line #4 Maximum Length=1
+Automatic Line #1 Maximum Length=1
+Automatic Line #2 Maximum Length=2
+Max Manual Wait = 0
+Max Automatic Wait = 1
+Avg Manual Wait = 0.0
+Avg Auto Wait = 0.0017667844522968198
+
+Vehicles that had to enter at a later time: 0
+

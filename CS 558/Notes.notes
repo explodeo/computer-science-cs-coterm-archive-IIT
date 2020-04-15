@@ -1,0 +1,198 @@
+! DDoS Attacks and Defenses !
+	<DoS Attack>
+	- action preventing authorized use of networks, systems, or apps by #Exhausting resources#
+		i. Directed against 
+			- network bandwidth
+			- system resources
+			- application resources
+		*Q* Why are they hard to defend against?
+			- hard to distinguish bots & client user
+			- security costs for protection
+			1) end-to-end paradigm
+				- sender & user responsible for security
+				- network optimized for making packet delivery (not policing traffic)
+			2) limited resources
+			3) not collocated resources
+			4) accountability not enforced
+			5) distributed control
+	# Basic Case #
+		- 
+	# Distributed Dos Attack #
+		(agents can be botnets)
+		Attacker -> handler(x3) -> agent (x9) -> Victim
+
+	// Norse Attack Map is interesing to look at //
+
+	# Address Spoofing #
+		- senders put any source address in packet (unverifiable source)
+			- ca directly attack in less tracable fashion
+			- can send unwelcome return traffic to spoofed address
+			- can bypass filters 
+		- Routers can sometimes catch Spoofing
+			- reverse path engineering
+			- 
+	#Smurf DoS Attack #
+		- send ping requests to broadcast address (IMCP Echo Req)
+		*Q* How do we prevent this?
+			- block broadcast address 
+			- block ping requests
+			- limit traffic from sources
+			- config router to not send packets to broadcast address
+
+	! Defense Must Match Attack !
+		- important to classify attack types
+	[DOS Attack Categories]
+		1) Degree of Automation 
+			- manual
+			- fully automated
+			- semi-automated (recruitment automated, attack phase it manually initiated)
+		2) Agent Recruitment Strategies
+			- Random Scanning (Code Red) (cannot work in IPv6)
+			- Hit list (split off pieces of list and give to newly recruited machines)
+			- Permutation Scanning (if agent sees already infected host, choose new starting point)
+			- SignPost Scanning (use comms from victim to find new host (like using address books))
+			2a) Vunerability Scanning
+				- Horizontal
+				- Vertical
+				- Coordinated		
+			2b) Attack Code Propogation
+				- central server
+				- Back-chaining (code downloadd from victim)
+		3) Exploited Weakness
+			- Semantic (Exploit a bug of a protocol or application)
+			- Brute Force 
+			3a) TCP (Transport Control Protocol)
+				- Guarantees reliable ordered stream of traffic
+				"Three Way handshake"
+					Source --> Receiver (send seqno=A)
+					Receiver --> Source (send ACK=B)
+					Source --> Receiver (send seqno=B)
+				# Attack using SYN Flood and take up stack space #
+					- defend using firewall to filter out SYN requests
+					- defend using *SYN COOKIE* (server sends SYN+ACK to client)
+						- *SYN COOKIEs* |time counter|  |md5|
+							- backwards compatible
+							- transparent to clients
+							- minimal overhead
+							- conform to RFC req. for TCP
+							- no performance impact
+							- *bad* hangs if ACK is lost
+		4) Source Address Validity
+			# Reflector Attack #
+		5) Attack Rate Dynamics
+	[DoS Defense]
+		# Detecting DDos #
+			- conduct survey of potential victims? (how do victims know they are under attack)
+			- Better: could ISP recognize attack using router data?
+			- *Without ISP*: detect flows that violate TCP congestion
+			- Ingress filtering
+			- Router based filtering (cannot use IP source address from different node to attack by packet filtering source-dest req.)
+			- defense by proof (pw, CAPTCHAs, signatures, cookies)
+				- *cookies* verify request from client comes from a given address and delay creation of session until client is "committed"
+				- - capabilities
+				- proof-by-work
+					- proof of humanity (reverse Turing Tests and CAPTCHAs)
+			<In-Network Monitoring>
+				(see diagram of week 2 slides)
+			*Adaptive Selective Verification* [Paper]
+				# Related work #
+					- Defenses:
+						- filtering: becomes ineffective when it cannot be installed (too high traffic) (best for destination flooding attacks)
+						- capabilities: becomes ineffective when attackers get capabilities (best for link-flooding attacks)
+						- currency:	using extra resources from client 
+							- paper uses bandwidth as currency
+					<Paper>
+				# Relative Solutions #
+					assumptions:
+						- attacker is using his max bandwidth
+						- Attack traffic hard to filter / rate limit explicitly
+						- no. botnets ~= no. legitimate clients
+						- Server has a LOT of bandwidth
+					*Selective Verification*: 
+						- clients send fixed number of extra requests
+						- server probablistically selects a fixed portion of requests
+						- no adaptation strategy
+					*Bandwidth Auctions*:
+						- clients build credit by sneding bytes ot accounting system
+						- server takes req. from clients with dest credit
+						- adaptive but may require significant space
+				# Solution Overview #
+					- shared channel model: attack and client rates vary in fixed bounds
+					- clients respond to attack by boosting req rates
+					- 
+					-
+				<Analytical Setting>
+					alpha: atk req factor
+					rho: client req factor
+					s: server capability
+					*T* time out window
+					<(Naive) Omnicient Protocol>
+						- attacker and client and server knows *alpha* and *rho* values
+						- transmit [a/p] copiex of the REQ
+						- if no ACK in *T* sec, then quit (T is worst case round trip delay)
+						(Server Protocol)
+						- Accept packet with probability of P = 1/(a+p[a/p])
+						- send ACK for each accepted REQ
+				!Adaptive Selective Verification!
+					(Adaptive Client Protocol)
+						- send one REQ
+						- calc J as retrial span
+						- double REQ rates after not getting ACK for *T* seconds
+					(Adaptive Server Protocol)
+						- store first *ST* REQs in a resevoir
+						- do random based REQ sampling of resevoir
+						- 
+						- Server replies with DACK if REQ is dropped
+						- if ACK or DACK lost for K packets, then quit
+					<Analysis>
+						- bandwidth consumption is (O(lg N)) more than Omnicient Protocol
+						- 
+					<Effect on TCP Cross Traffic>
+						- ASV minimally affects TCP cross traffic
+						- ASV has not much overhead on other traffics
+					<Summary>
+						1. 
+						2. scalable and feasible
+						3. if everyone uses it then it becomes ineffective as resources become precious. clients become more agressive.
+				!Backscatter Analysis!
+! Software Defined Networks! (SDN)
+	- immersion network architecture
+	- SDN has special fatures % sp ized parats.
+	*Q* can we uniform open interface (open platform) to oper ate the networ *network OF!
+	*Open DataPlane API*
+		- Prioritized list of rules
+			- pattern: (match headers)
+			- actions: what to do w/ packet
+			- Priority: disambiguate overlapping patterns
+			- Counters: no. bytes/packets
+	*Openflow Switch*
+		- extracts frame data dep on type and controls packet handling
+	<SDN Applications>
+		- Network virtualization
+		- load balancing (using policies)
+		- dynamic access control (allow user to access info dynamically based on ACK and policy)
+		- seamless mobility (user roaming)
+	<Challenges>
+		- heterogenous switches
+			- no. packet handling rules
+			- range of matches and actions
+			- multi-stage pipeline of packet processing
+			- offload some control-plane functionality
+		- controller delay and overhead
+			- controller is slower than switches
+			- req. to keep packets in "fastest route"
+		- controller is a (centralized) point of failure
+			- need distributed physical controller
+				- increases network complexty
+	<Testing and Debugging>
+		- 
+	!Veriflow: Verifying Network Invariants in Real-Time!
+		- SDNs can conflict in rules when NW and NWappl is programmed simultaneously
+	<SDN ATTACK Paper>
+		- 
+! Critical Infrastructure Protection !
+! Machine Learning and Applications in Malware Classification !
+<HMM Chain>
+	- machine learning tech."discrete hill climh tech."
+	- 
+<Clustering Methods>

@@ -1,0 +1,24 @@
+Illinois
+3
+Obama	President	d	131313	19.21	Great in 2008!
+Daley	Mayor	d	5678	89000.45	My dad was good!
+Stevenson	Governor	d	2367	43877.45	My hair is bad!
+Wisconsin
+6
+Smith	Mayor	r	3	5.98	You can count on me daily!
+Bush	President	r	11004	1222888.44	My dad was good too!
+Gore	President	d	11003	54.34	Hear my Gore-y details!
+Kim	Governor	r	111	3212.16	I'm the other Guy!
+Hanrath	Instructor	i	6	0.12	What, me worry?
+Jones	Instructor	o	9	14.56	You'd better worry!
+Alaska
+4
+Nader	President	o	2	50.00	Nader's Raiders!
+Alexander	Mayor	i	13	13.13	What am I doing?
+Thompson	Governor	o	1	0.00	And you thought I was gone!
+Schwarzenegger	President	o	123	1233377.94	I'll be back!
+Delaware
+2
+Allen	Instructor	i	147	16.71	No exams in cs105!
+Stewart	President	o	3	27367.67	I'm a good thing!
+END_OF_FILE

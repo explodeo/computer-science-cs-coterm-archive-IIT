@@ -1,0 +1,37 @@
+	! SQL
+		- create databases
+		- add/mod/del structures/records
+		- create/update users
+	! TCL
+		- COMMIT 
+		- ROLLBACK
+		- SAVEPOINT
+	! DQL
+		- SELECT
+	! DML
+		- INSERT INTO
+		- UPDATE
+		- DELETE
+	! DDL
+		- CREATE
+		- ALTER
+		- DROP
+		- TRUNCATE
+	! DCL
+		- GRANT
+		- REVOKE
+		- ALTER
+	! Storage Manager
+		- data files
+		- data dictionary
+		- indices
+//Normalization
+	! Normal Forms !
+		1) a table is in the first NF if every cell is automic (has single value per cell)
+		2) no partial dependency (if B -> C, but AB is key, split into ABD and BC tables)
+		3) transitivity # lossless with Functional Dependency (FD) # (a->b->c) --> (ab), (bc)
+	/*stop here*/
+		*BCNF*
+		4) 
+		5) 
+		6) 
