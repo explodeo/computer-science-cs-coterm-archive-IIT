@@ -1,0 +1,11 @@
+﻿@model FlightBooking.ViewModels.BookingViewModel
+
+@{
+    ViewBag.Title = "Book";
+}
+
+<h2>Book</h2>
+
+@Html.LabelFor(model => model.CreditCard)
+@Html.DropDownListFor(model => model.CreditCard, new SelectList(""))
+<!--TODO: populate dropdown with credit cards-->

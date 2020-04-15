@@ -1,0 +1,48 @@
+sql script
+test data
+application (desktop/command line)
+interface
+
+sql 
+duering
+1 DDL
+keys
+updates (insert/del)
+relational algebra
+database modeling (ERD)
+!! homeworks are harder than the exams !!
+
+
+
+! Normalization !
+	TABLE: SSN, NAME, SALARY, DEPT, BLDG, BUDGET
+	ENTITIES:
+		- EMPLOYEE (ssn, name, salary, *dept*)  
+
+	# 1st NF # 
+	atomic values (eg: address is broken into multiple values)
+
+	#2nd NF # 
+	no partial dependencies (A -> B and B -> C in A[BC] CANNOT HAPPEN)
+	break sets into smaller subsets composed of smaller keys
+
+	# 3 NF #
+	*Functional Dependencies*
+		- TRY TO REDUCE SUPERKEYS (eg: [ABCDE] -> [ABC] [DE])
+
+	SUMMARY:
+	BCNF -> 3NF -> 2NF -> 1NF
+	# 1NF #
+		- atomic attributes
+	# 2NF #
+		- no non-trivial dependencies of non-prime attributes on parts of the key
+	# 3NF #
+		- no transitive non-trivial dependencies on the key
+	# BCNF #
+	- only non-trivial dependencies on a superkey
+
+! Lossless Join Decomposition & Dependency Preservation !
+	 - table decomposition is good if a natural join creates the original table 
+	 	-- used with functional dependencies:
+	 	  decomposition of R is lossless if:
+	 		R1 n R2 -> R1  or  R1 n R2 -> R2

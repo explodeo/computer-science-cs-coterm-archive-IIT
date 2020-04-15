@@ -1,0 +1,32 @@
+﻿@model IEnumerable<FlightBooking.Models.CreditCard>
+
+<p>
+    @Html.ActionLink("Add New Credit Card", "Create")
+</p>
+
+<table class="table">
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.Type)</th>
+        <th>@Html.DisplayNameFor(model => model.CcNumber)</th>
+        <th>@Html.DisplayNameFor(model => model.CardFirstName)</th>
+        <th>@Html.DisplayNameFor(model => model.CardLastName)</th>
+        <th>@Html.DisplayNameFor(model => model.ExpirationDate)</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.Type)</td>
+            <td>@Html.DisplayFor(modelItem => item.CcNumber)</td>
+            <td>@Html.DisplayFor(modelItem => item.CardFirstName)</td>
+            <td>@Html.DisplayFor(modelItem => item.CardLastName)</td>
+            <td>@Html.DisplayFor(modelItem => item.ExpirationDate)</td>
+            
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.CcNumber }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.CcNumber })
+            </td>
+        </tr>
+    }
+</table>

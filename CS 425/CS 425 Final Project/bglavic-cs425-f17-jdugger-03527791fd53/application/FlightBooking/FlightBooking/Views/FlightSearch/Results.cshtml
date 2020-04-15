@@ -1,0 +1,66 @@
+﻿@model IEnumerable<FlightBooking.ViewModels.FlightConnectionViewModel>
+
+@{
+    ViewBag.Title = "Results";
+}
+
+<h2>Results</h2>
+
+<table class="table">
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.CoachPrice)</th>
+        <th>@Html.DisplayNameFor(model => model.FirstClassPrice)</th>
+        <th>@Html.DisplayNameFor(model => model.TotalLength)</th>
+        <th>@Html.DisplayNameFor(model => model.DepartureTime)</th>
+        <th>@Html.DisplayNameFor(model => model.ArrivalTime)</th>
+        <th colspan="4"></th>
+    </tr>
+    
+    @for (int i = 0; i < Model.Count(); i++)
+    {
+        var booking = Model.ElementAt(i);
+        var f1 = booking.Flights.First();
+
+        <tr data-toggle="collapse" href="@("#collapse" + i)">
+            <td>@Html.DisplayFor(modelItem => booking.CoachPrice)</td>
+            <td>@Html.DisplayFor(modelItem => booking.FirstClassPrice)</td>
+            <td>@Html.DisplayFor(modelItem => booking.TotalLength)</td>
+            <td>@Html.DisplayFor(modelItem => booking.DepartureTime)</td>
+            <td>@Html.DisplayFor(modelItem => booking.ArrivalTime)</td>
+            <td colspan="4"></td>
+        </tr>
+
+        <tbody id="@("collapse" + i)" class="collapse">
+        <tr>
+            <th>Airline</th>
+            <th>Flight Number</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Length</th>
+            <th>Departure</th>
+            <th>Arrival</th>
+            <th>Coach</th>
+            <th>First Class</th>
+        </tr>
+
+        @foreach (var flight in booking.Flights)
+        {
+            var coachPrice = flight.Prices.First(p => p.FlightClass == "Coach");
+            var firstClassPrice = flight.Prices.First(p => p.FlightClass == "First");
+            <tr>
+                <td>AA</td>
+                <td>@Html.DisplayFor(modelItem => flight.FlightNumber)</td>
+                <td>@Html.DisplayFor(modelItem => flight.DepartureAirport)</td>
+                <td>@Html.DisplayFor(modelItem => flight.ArrivalAirport)</td>
+                <td>@Html.DisplayFor(modelItem => flight.Length)</td>
+                <td>@Html.DisplayFor(modelItem => flight.DepartureTime)</td>
+                <td>@Html.DisplayFor(modelItem => flight.ArrivalTime)</td>
+                <td>@Html.DisplayFor(modelItem => coachPrice.Cost)</td>
+                <td>@Html.DisplayFor(modelItem => firstClassPrice.Cost)</td>
+            </tr>
+        }
+        <tr><td>@Html.ActionLink("Book", "Book", "Bookings")</td></tr>
+            <!--TODO: need to find a way to pass list of flights to bookings page-->
+        </tbody>
+    }
+</table>

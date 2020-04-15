@@ -1,0 +1,47 @@
+﻿@model IEnumerable<FlightBooking.Models.Flight>
+
+@{
+    ViewBag.Title = "Cancel";
+}
+
+<h2>Cancel</h2>
+
+<h3>Are you sure you want to cancel this booking?</h3>
+<div>
+    <hr />
+    
+    <table class="table">
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.AirlineID)</th>
+            <th>@Html.DisplayNameFor(model => model.FlightNumber)</th>
+            <th>@Html.DisplayNameFor(model => model.DepartureAirport)</th>
+            <th>@Html.DisplayNameFor(model => model.ArrivalAirport)</th>
+            <th>@Html.DisplayNameFor(model => model.Length)</th>
+            <th>@Html.DisplayNameFor(model => model.DepartureTime)</th>
+            <th>@Html.DisplayNameFor(model => model.ArrivalTime)</th>
+        </tr>
+
+        @foreach (var flight in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => flight.AirlineID)</td>
+                <td>@Html.DisplayFor(modelItem => flight.FlightNumber)</td>
+                <td>@Html.DisplayFor(modelItem => flight.DepartureAirport)</td>
+                <td>@Html.DisplayFor(modelItem => flight.ArrivalAirport)</td>
+                <td>@Html.DisplayFor(modelItem => flight.Length)</td>
+                <td>@Html.DisplayFor(modelItem => flight.DepartureTime)</td>
+                <td>@Html.DisplayFor(modelItem => flight.ArrivalTime)</td>
+            </tr>
+        }
+    </table>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

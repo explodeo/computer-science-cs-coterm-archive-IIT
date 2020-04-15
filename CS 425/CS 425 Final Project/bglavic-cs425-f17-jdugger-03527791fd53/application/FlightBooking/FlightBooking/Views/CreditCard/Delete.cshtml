@@ -1,0 +1,42 @@
+﻿@model FlightBooking.Models.CreditCard
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Credit Card</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <!--TODO: fix borken titles (note displayfor and displaynamefor)-->
+        
+        <dt>@Html.DisplayNameFor(model => model.Type)</dt>
+        <dd>@Html.DisplayFor(model => model.Type)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.CcNumber)</dt>
+        <dd>@Html.DisplayFor(model => model.CcNumber)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.CardFirstName)</dt>
+        <dd>@Html.DisplayFor(model => model.CardFirstName)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.CardLastName)</dt>
+        <dd>@Html.DisplayFor(model => model.CardLastName)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.ExpirationDate)</dt>
+        <dd>@Html.DisplayFor(model => model.ExpirationDate)</dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index", "Account")
+        </div>
+    }
+</div>

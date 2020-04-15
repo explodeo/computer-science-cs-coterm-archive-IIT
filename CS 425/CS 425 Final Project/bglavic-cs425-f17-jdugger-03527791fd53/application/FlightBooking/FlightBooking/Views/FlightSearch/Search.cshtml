@@ -1,0 +1,98 @@
+﻿@model FlightBooking.ViewModels.FlightSearchViewModel
+
+@{
+    ViewBag.Title = "Search";
+}
+
+<h2>Search</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        
+        <!--TODO: DepartureAirport and ArrivalAirport should be dropdowns-->
+        <div class="row">
+            <div class="col-md-1 col-lg-1"></div>
+            <div class="form-group col-md-5 col-lg-5">
+                @Html.LabelFor(model => model.DepartureAirport, new {@class = "control-label col-md-2"})
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DepartureAirport, new {htmlAttributes = new {@class = "form-control"}})
+                    @Html.ValidationMessageFor(model => model.DepartureAirport, "", new {@class = "text-danger"})
+                </div>
+            </div>
+            
+            <div class="col-md-1 col-lg-1"></div>
+            <div class="form-group col-md-5 col-lg-5">
+                @Html.LabelFor(model => model.ArrivalAirport, new {@class = "control-label col-md-2"})
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ArrivalAirport, new {htmlAttributes = new {@class = "form-control"}})
+                    @Html.ValidationMessageFor(model => model.ArrivalAirport, "", new {@class = "text-danger"})
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsRoundTrip, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.CheckBoxFor(model => model.IsRoundTrip, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.IsRoundTrip, "", new {@class = "text-danger"})
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-1 col-lg-1"></div>
+            <div class="form-group col-md-5 col-lg-5">
+                @Html.LabelFor(model => model.DepartureDate, new {@class = "control-label col-md-2"})
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DepartureDate, new {htmlAttributes = new {@class = "form-control"}})
+                    @Html.ValidationMessageFor(model => model.DepartureDate, "", new {@class = "text-danger"})
+                </div>
+            </div>
+            
+            <div class="col-md-1 col-lg-1"></div>
+            <div class="form-group col-md-5 col-lg-5">
+                @Html.LabelFor(model => model.ReturnDate, new {@class = "control-label col-md-2"})
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ReturnDate, new {htmlAttributes = new {@class = "form-control"}})
+                    @Html.ValidationMessageFor(model => model.ReturnDate, "", new {@class = "text-danger"})
+                </div>
+            </div>
+        </div>
+        
+        <!--TODO: replace with dropdown-->
+        <div class="form-group">
+            @Html.LabelFor(model => model.MaximumConnections, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MaximumConnections, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MaximumConnections, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        
+        
+        <!--TODO: replace with dropdown-->
+        <div class="form-group">
+            @Html.LabelFor(model => model.MaximumTime, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MaximumTime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MaximumTime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.MaximumPrice, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MaximumPrice, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MaximumPrice, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Search" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}

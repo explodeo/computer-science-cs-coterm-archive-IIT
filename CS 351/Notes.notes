@@ -1,0 +1,65 @@
+! Virtual Memory !
+	- maximize memory *throughput* 
+		- bytes/second
+		- depends on access latencies (DRAM, HDD) and hit rate
+		// throughput depends on bandwith as well 
+		// latency is speed of access
+		// bandwith is the container size (cache, DRAM, etc) in memory hierarchy
+	- maximize memory *utilization* 
+		- fraction of allocated memory containing user data or *payload*
+		
+	- provide to processes *address space consistency* and *memory protection* 
+		*address space consistency* - provide a uniform view of memory to each process
+		*memory protection* - prevent processes from directly accessing each others' memory
+
+		# processes reference VIRTUAL addresses
+			- CPU relays VIRTUAL addresses to MMU (mem mgmt unit)
+				- translated to PHYSICAL addresses (in RAM or HDD)
+
+		" PROBLEM: make virtual addresses --> physical addresses" --- MUST BE FAST
+			*MMU* - handles simple and fast ops (table lookup)
+			*Kernel* - handles complex ops (eviction policy)
+
+! Virtual Memory Implementations !
+	// maximize memory *throughput* 
+	// maximize memory *utilization* 
+	// provide to processes *address space consistency* and *memory protection* 
+	1) simple relocation
+		- CPU generates VIRTUAL address (N)
+			-- sends to MMU
+		- relocation register is loaded with address (B) by kernel on EVERY context switch 
+			- PHYSICAL address is (N+B) in Main mem
+		- limit register holds data (L) containing memory area accessible by process (0 <=N <= L)
+			- *PROCESS SANDBOX* (B+L -> B) is the area of accessible memory
+		<Pros and Cons>
+		"simple and fast"
+		"gives memory protection"
+		*address spaces are not consistent*
+		*memory is vastly underutilized* (all of a process below address limit must be loaded) -- (think array vs LinkedList)
+
+	2) Segmentation (INTEL x86)
+		- partition VIRTUAL (address) space to multiple segments
+		- use multiple relocation registers
+		**VIRTUAL ADDRESS HAS FORM** seg number : offset 
+			== B = B+offset
+			== offset <= Limit
+		- MMU registers are part of per-process metadata
+			- repopulated per context switch
+		<Pros and Cons>
+			"very fast" (translation = register access and addition)
+			"gives protection with data limits"
+			"improved consistency with segmented addresses"
+			*variable segment sizes cause MEMORY FRAGMENTATION* ("jigsaw puzzle" many free spaces, but spaces may be too small)
+				*lowers utilization*
+				*needs DEFRAGMENTATION* (pack all used memory together by changing addresses -- takes A LOT of time)
+	
+	3) Paging (modern)
+		- partition memory into uniform-sized pages (think void array)
+		- minimum mapping size is X pages
+		- not all of a segment needs mapping (think caching for MASSIVE data)
+		<Mapping problem>
+			- break VA into "virtual page number" and "virtual page offset"
+				- map VPN to physical page number
+				# page size = 2^b bytes #
+
+			! see slides !

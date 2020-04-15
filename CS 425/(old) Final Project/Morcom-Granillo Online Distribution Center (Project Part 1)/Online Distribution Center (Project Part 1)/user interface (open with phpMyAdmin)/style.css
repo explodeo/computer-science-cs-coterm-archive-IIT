@@ -1,0 +1,370 @@
+/*rgb(255, 255, 255);/* white
+  #21ce99 green
+  #ccc black */
+
+
+div#editor {
+  width: 81%;
+  margin: auto;
+  text-align: left;
+}
+
+#edit {
+  display: inline-block;
+}
+
+
+
+body{
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #040d14;
+  margin: 0;
+  padding: 0;
+}
+
+h2{
+	text-align: center;
+	color: #21ce99;
+	padding-top: 20px; 
+}
+
+h3, h4{
+	text-align: center;
+	color: #21ce99; 
+}
+
+p {
+	color: rgb(255, 255, 255);
+}
+
+/* header */
+div.container-h{
+	width: 75%;
+	margin: auto;
+	background: #21ce99;
+}
+
+.header{
+	text-align: center;
+	border: 1px solid white;
+	background: #21ce99;
+	margin: auto;
+	position: fixed;
+	top: 0px;
+	width: 100%;
+}
+
+.title{
+	color: #040d14;
+	font-weight: unset;
+	float: left; 
+	margin-top: 15px;
+
+}
+
+
+.pages{
+	list-style: none;
+	text-align: right;
+	padding: 10px 0 10px 0;
+}
+
+.pages a{
+	color: #040d14;
+	text-decoration: unset;
+	padding: 0px 2px 0px 2px;
+
+}
+
+.pages a:hover{
+	color: white;
+}
+
+
+.pages li:hover{
+	cursor: pointer; 
+}
+
+.pages li{
+	display: inline-block;
+	padding:0px 10px 0px 10px;
+}
+
+
+/*login header*/
+.header-img{
+	width: 24px;
+	height: 24px;
+	position: relative;
+	overflow: auto;
+	right: 5px;
+	top: 8px;
+}
+
+.profile-header{ /*aligns header when logged in*/
+	list-style: none;
+	text-align: right;
+	padding: 0px;
+	position: relative;
+	bottom: 5px;
+	right: 5px;
+	margin-bottom: 0px;
+	width: 100%;
+}
+
+::placeholder{
+	/*color: red;*/		
+}
+
+
+/* body*/
+.text p{
+	width: 60%;
+	margin: auto;
+	text-indent: 30px;
+	padding-bottom: 15px;	
+	color: #ccc;
+}
+
+div.text li{
+}
+
+div.container{
+	width: 70%;
+	margin: auto;
+	margin-top: 100px;
+	margin-bottom: 100px;
+	background: #2B547E;
+	border-radius: 15px;
+	padding-bottom: 20px;
+	rgba(0, 89, 177, 0.2)
+	#2B547E
+	display: block;
+}
+
+/*About me page*/
+div.gallery {
+
+    margin: 10px 0px 10px 100px; 
+    border: 1px solid #ccc;
+    display: inline-block;
+    width: 225px;
+    background: #966F33;
+}
+
+div.gallery:hover {
+    border: 1px solid #777;
+}
+
+div.gallery img {
+	width: 100%;
+    height: auto;
+}
+
+div.desc {
+    padding: 15px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+/*signup.php*/
+.signup-form {
+	width:400px;
+	margin: 0 auto;
+	padding-top: 30px;
+}
+
+.signup-form input{
+	width: 90%;
+	height: 40px;
+	padding: 0px 5%;
+	margin-bottom: 10px;
+	border: none;
+	line-height: 40px;
+	background-color: #222;
+	color: orange;
+}
+
+.signup-form button{
+	display: block;
+	margin: 0 auto;
+	width: 30%;
+	height: 40px;
+	margin-bottom: 5px;
+	border: none;
+}
+
+
+.signup-form button:hover{
+	cursor: pointer;
+	background-color: white;
+}
+
+.signup-form p{
+	position: relative;
+	text-indent: 0px;
+	display: inline-block;
+	background-color: black;
+	padding: 5px;
+	margin-bottom: 10px;
+	margin-right: 0px;
+	padding-right: 0px;
+}
+
+
+/*User Home*/
+.checkmark{
+	list-style: none;
+	margin: auto;
+	text-align: center;
+	position: relative;
+	bottom: 10px;
+	right: 15px;
+	color: #F433FF;
+}
+
+.checkmark li.tick:after{
+	content: " \2713";
+  	color: #1aff1a;
+}
+
+.checkmark li.cross:after{
+	content: " \2717";
+  	color: crimson;
+}
+
+.checkmark li.tick:before{
+	content: "\2713 ";
+  	color: #1aff1a;
+}
+
+.checkmark li.cross:before{
+	content: "\2717";
+  	color: crimson;
+}
+
+
+/*forums*/
+.forums textarea{
+	display: block;
+	margin: auto;
+	width: 500px;
+	height: 50px;
+	resize: none;
+}
+
+.forums button{
+	width: 100px;
+	height: 30px;
+	background-color: #282828;	
+	color: #fff;
+	font-family: arial;
+	font-weight: 400px;
+	cursor: pointer;
+	display: block;
+	margin: auto;
+	position: relative;
+	left: 200px;
+	bottom: 10px;
+}
+
+.comment-box{
+	text-indent: 0px;
+	margin: auto;
+	width: 60%;
+	padding: 20px;
+	padding-bottom: 15px;
+	margin-bottom: 5px;
+	background-color: #fff;
+	border-radius: 4px;
+	position: relative;/*allows edit button to stay up in corner*/
+}
+.comment-box p{
+	width: 100%;
+	text-indent: 0px;
+	position: relative;
+	bottom: 10px;
+	padding-bottom: 0px;
+	margin-left: 0px;
+	font-family: arial;
+	font-size: 14px;
+	color: #282828;
+}
+
+
+.edit-form button{
+	width: 40px;
+	height: 25px;
+	background-color: #282828;	
+	color: #fff;
+	font-family: arial;
+	font-weight: 400px;
+	cursor: pointer;
+	opacity: 1.0;
+}
+
+.edit-form button:hover{
+	opacity: 0.8;
+}
+
+/*user pic form*/
+.user-container img{
+	width: 95px;
+	height: 105px;
+	border: 1px solid black;
+}
+
+.user-container{
+	margin: auto;
+	overflow: auto;
+	width: 50%;
+}
+
+.text-seperate {
+	background-color: white;
+	padding-bottom: 12px;
+	position: relative;
+	bottom: 110px;
+	left: 100px; 
+}
+
+.text-seperate td{
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.link a{
+	text-decoration: none;
+}
+.link button{
+	position: relative;
+	left: 10px;
+	top: 10px;
+}
+
+
+
+.upload-position{
+	position: relative;
+	top: 100px;
+}
+
+.upload-button{
+	position: relative;
+	bottom: 90px;
+}
+
+.upload-button button{
+	position: relative;
+	right: 50px;
+}
+
+.delete-button{
+	position: relative;
+	bottom: 75px;
+}
+
+.delete-button button{
+	position: relative;
+} 
