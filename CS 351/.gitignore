@@ -1,0 +1,13 @@
+.DS_Store
+.vagrant
+*.o
+*.gch
+*.pch
+*.out
+*.dSYM/
+.#*
+
+# executables
+a.out
+hello
+sudoku
